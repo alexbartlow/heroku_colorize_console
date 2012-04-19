@@ -17,11 +17,12 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
+require 'cli-colorize'
 module Heroku::Command
   class Base
     # rewrite display to use Wirble coloring if option is set
     def display_with_colorize(msg, newline=true)
-      msg = Wirble::Colorize.colorize(msg) if @options and @options[:colorize]
+      msg = CLIColorize.colorize(msg, :background => :red) if @options and @options[:colorize]
       display_without_colorize(msg, newline)
     end
 
@@ -29,7 +30,7 @@ module Heroku::Command
     alias_method :display, :display_with_colorize
   end
 
-  class App
+  class Run
     # set option to color output
     def console_with_colorize
       @options ||= {}
